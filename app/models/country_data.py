@@ -1,4 +1,16 @@
+"""Country and region data with helper functions."""
+from typing import Dict, List, Optional, Set
+
 # Unified COUNTRY_DATA dict: names, pricing, regions, area codes
+
+# Telephone dialing prefixes for country ISO codes (without '+')
+COUNTRY_CALLING_CODES: Dict[str, str] = {
+    'US': '1',
+    'CA': '1',
+    'GB': '44',
+    'AU': '61',
+}
+
 COUNTRY_DATA = {
     'US': {
         'name': 'United States',
@@ -122,6 +134,37 @@ COUNTRY_DATA = {
             "Northern Territory": {"code": "South Australia", "area_codes": [618]},
             "Any region (Country-wide)": {"code": None, "area_codes": []}
         }
-    }
-}
+
+
+def get_area_codes(country_iso: str) -> List[int]:
+    """
+    Returns a sorted list of unique area codes for the given country ISO code.
+    """
+    data = COUNTRY_DATA.get(country_iso.upper())
+    if not data:
+        return []
+    regions = data.get('regions', {})
+    codes: List[int] = []
+    for region in regions.values():
+        codes.extend(region.get('area_codes', []))
+    return sorted(set(codes))
+
+
+def get_country_code(country_iso: str) -> Optional[str]:
+    """
+    Returns the telephone dialing prefix for the given country ISO code (without '+').
+    """
+    return COUNTRY_CALLING_CODES.get(country_iso.upper())
+
+
+def get_regions(country_iso: str) -> Dict[str, Optional[str]]:
+    """
+    Returns a mapping of region names to their region codes for the given country ISO code.
+    """
+    data = COUNTRY_DATA.get(country_iso.upper())
+    if not data:
+        return {}
+    regions = data.get('regions', {})
+    return {name: details.get('code') for name, details in regions.items()}
+
 
