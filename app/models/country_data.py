@@ -3,14 +3,6 @@ from typing import Dict, List, Optional, Set
 
 # Unified COUNTRY_DATA dict: names, pricing, regions, area codes
 
-# Telephone dialing prefixes for country ISO codes (without '+')
-COUNTRY_CALLING_CODES: Dict[str, str] = {
-    'US': '1',
-    'CA': '1',
-    'GB': '44',
-    'AU': '61',
-}
-
 COUNTRY_DATA = {
     'US': {
         'name': 'United States',
