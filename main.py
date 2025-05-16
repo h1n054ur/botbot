@@ -1,1 +1,8 @@
-# Entry point: loads cli_controller and starts MainMenu
+from app.interfaces.cli_controller import CLIController
+
+def main():
+    controller = CLIController()
+    controller.run()
+
+if __name__ == "__main__":
+    main()
