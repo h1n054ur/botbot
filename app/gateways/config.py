@@ -1,8 +1,10 @@
-import os
-from dotenv import load_dotenv
+from shared.settings import Settings
 
 class Config:
+    """
+    Configuration loader that exposes environment-based settings.
+    """
     def __init__(self):
-        load_dotenv()
-        self.account_sid = os.getenv("TWILIO_ACCOUNT_SID")
-        self.auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+        settings = Settings()
+        self.account_sid = settings.TWILIO_ACCOUNT_SID
+        self.auth_token = settings.TWILIO_AUTH_TOKEN
